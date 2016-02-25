@@ -8,4 +8,10 @@ MAINTAINER djh2020
 RUN apt-get update
 
 #Install locate package
-RUN apt-get install mlocate
+RUN apt-get install -y mlocate
+
+#Install curl package
+RUN apt-get install -y curl
+
+#Install apache2 package
+RUN apt-get install -y apache2
