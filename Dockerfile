@@ -1,26 +1,13 @@
-# Set the base image to Ubuntu
-FROM ubuntu
+FROM centos:6
 
-# File Author / Maintainer
-MAINTAINER djh2020
+RUN yum update && yum clean all && yum install -y \
+mlocate \
+curl \
+httpd \
+&& updatedb
 
-# Update the repository sources list
-RUN apt-get update
 
-#Install locate package
-RUN apt-get install -y mlocate
+COPY html/ /var/www/html/
 
-#Install curl package
-RUN apt-get install -y curl
 
-#Install apache2 package
-RUN apt-get install -y apache2
-
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-
-EXPOSE 8080
-
-CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
-
+ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
